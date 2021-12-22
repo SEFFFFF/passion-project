@@ -1,45 +1,38 @@
-let angle = 45;
+// var s determines grid size.
+// Increase number to make the grid larger.
+// Decrease number to make the grid smaller.
+var size = 30;
+var col;
+var row;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  // noLoop();
-  angleMode(DEGREES);
-  rectMode(CENTER);
+  angleMode(RADIANS);
+  col = width / size;
+  row = height / size;
 }
 
 function draw() {
-  
-  var xoff = 0;
-  //push();
-  
-  //pop();
-  // These two loops create the grid.
-  // Change the number in i<40 to change the amount of columns.
-  for (var i = 0; i < 30; i++) {
-    var yoff = 0;
-    
-    // Change the number in j<24 to change the amount of rows.
-    for (var j = 0; j < 20; j++){
-      background(255);
-
-      // First number in x and y determine the space between objects in the grid.
-      // Second number determines x and y offset from starting point.
-      var x = j * 25;
-      var y = i * 25;
-
-      // Value of d and e sets the diameter of the drawn objects.
-      var d= (noise(xoff, yoff) * 40) * frameCount;
-      noiseDetail(10);
-      // var d = 5;
-     
-      
-      fill(0, 0, 0, 75);
-      noStroke();
-      ellipse(x, y, d);
-      
+  background(255);
+  var yoff = 0;
+  // In both for loops change the numbers in y / x += 1.5 to alter distance between objects.
+  for (var y = 0; y <= row; y += 1.5) {
+    var xoff = 0;
+    for (var x = 0; x <= col; x += 1.5) {
+      // angle creates random noise value.
+      // Change PI to TWO_PI for a more random angles.
+      // This value can be further altered by dividing or multiplying PI/TWO_PI.
+      var angle = noise(xoff, yoff) * PI * 2;
+      // v creates a vector starting at the value of angle.
+      var v = p5.Vector.fromAngle(angle);
+      stroke(0);
+      push();
+      translate(x * size, y * size);
+      rotate(v.heading());
+      line(0, 0, size, 0);
+      pop();
       xoff += 0.1;
     }
     yoff += 0.1;
-  }; 
+  }
 }
-
